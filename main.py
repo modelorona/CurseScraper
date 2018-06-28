@@ -35,8 +35,14 @@ if __name__ == '__main__':
 
     # now begin scraping the noswearing site
     words = noswearing_parser.get_words()
-    for word, definition in words.items():
-        save(word, definition)
+
+    # randomly shuffle everything so it is not by alphabet
+    shuffled_keys = list(words.keys())
+
+    random.shuffle(shuffled_keys)
+
+    for k in shuffled_keys:
+        save(k, words.get(k))
 
     # finally save the amount of words read in
     save_other('numberOfWords', index)

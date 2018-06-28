@@ -1,4 +1,5 @@
 import firebase_admin
+import random
 from firebase_admin import credentials
 from firebase_admin import firestore
 import noswearing_parser
@@ -10,17 +11,17 @@ index = 0
 
 # save the key with its value
 def save(key, value):
-    # todo: split this into a function to save words and a function to save numberOfWords
     global index
-    if key == 'numberOfWords':
-        words_ref.document(key).set({
-            key: value
-        })
-    else:
-        words_ref.document(str(index)).set({
-            key: value
-        })
+    words_ref.document(str(index)).set({
+        key: value
+    })
     index += 1
+
+
+def save_other(key, value):
+    words_ref.document(key).set({
+        key: value
+    })
 
 
 if __name__ == '__main__':
@@ -38,6 +39,6 @@ if __name__ == '__main__':
         save(word, definition)
 
     # finally save the amount of words read in
-    save('numberOfWords', index)
+    save_other('numberOfWords', index)
 
     print("The End")
